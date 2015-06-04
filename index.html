@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Curious Sound Object</title>
+  <meta name="author" content="Jake Rocheleau">
+  <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
+  <link rel="icon" href="http://designshack.net/favicon.ico">
+  <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="js/parser.js"></script>
+</head>
+
+<body>
+  
+  <div id="w">
+    <div id="content">
+      <h1>RSS Feed Demo Only Text</h1>
+      
+      <div id="tumblr" class="feedcontainer"></div>
+      <hr>
+      <div id="pinterest" class="feedcontainer"></div>
+    </div><!-- @end #content -->
+  </div><!-- @end #w -->
+    
+<script type="text/javascript">
+$(function(){
+  // running custom RSS functions
+  parseRSS('http://curioussoundobjects.tumblr.com/rss', '#tumblr');
+  parseRSS('https://www.pinterest.com/nickolaspeter/build.rss/', '#pinterest');
+});
+</script>
+</body>
+</html>
