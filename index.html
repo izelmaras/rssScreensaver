@@ -3,7 +3,7 @@
 <head>
     
   <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html">
+<!--  <meta http-equiv="Content-Type" content="text/html">-->
   <title>Curious Sound Object</title>
   <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -17,6 +17,7 @@
   <script type="text/javascript" src="slick/slick.min.js"></script>
   <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
   <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+ 
 <!--  /Slick Carousel -->
     
 </head>
@@ -25,33 +26,34 @@
     <div class="wrapper"> 
     <div class="my-slideshow">
     </div>
-        </div>
+    </div>
     
     <div class="data-div" style="display: none;">
         <div class="data-list"></div> 
     </div>
+    <div class="empty"></div>
+    <img id="logo" src="logo.png"></img>
 
 
 <script type="text/javascript">
 
 $(function(){
-   parseRSS('http://www.pinterest.com/izelmaras/visual/rss', '#pinterest'); 
+   parseRSS('https://www.pinterest.com/izelmaras/looks/rss', '#pinterest'); 
      
 });
 
-
-    
 function parseRSS(url, container) {
     
   $.ajax({
     //Ajax call to encode url
-    url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=250&callback=?&q=' + encodeURIComponent(url),
+    url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=25&callback=?&q=' + encodeURIComponent(url),
     dataType: 'json',
     //Data includes the data we get in the json format
     success: function(data) {
-                      console.log(data.responseData.feed);
+        console.log(data.responseData.feed);
 
       $.each(data.responseData.feed.entries, function(key, value){
+        console.log("HEY");
         var thehtml = value.content; 
         $("<div/>").appendTo(".data-div .data-list").html(thehtml).addClass("imageDiv");
         $("<p/>").appendTo(".data-div .data-list").html(value.title).addClass("title");
@@ -60,7 +62,6 @@ function parseRSS(url, container) {
         $("<div/>").appendTo(".my-slideshow").html(onlyImg).addClass("class").css("display", "block");
         $(".class:last").append(onlyTitle).css("font-size","160%").css("font-family","Futura").css("margin-top","60px"); 
         $("<link/>").appendTo(".class:last").html(value.link); 
-        console.log("Hi");
       });
 
 //           Slick Carousel        
@@ -70,14 +71,22 @@ function parseRSS(url, container) {
             slidesToScroll: 1,
             arrows: false,
             autoplay: true,
-            autoplaySpeed: 500,
+            autoplaySpeed: 2000,
             cssEase: 'linear',
             fade: true,
             centerMode: false,
-            //adaptiveHeight: true,
+            adaptiveHeight: false,
         });
-//           Slick Carousel End
         
+//        $('.my-slideshow').css('margin-right', '0px').css('width', 'auto');
+//                $('.my-slideshow').css('margin-right', '0px').css('margin-left', '80px').css('width', 'auto');
+
+//           Slick Carousel End
+        $('img').css('height', '300px').css('width', 'auto').css('margin-left', 'auto').css('margin-right', 'auto');
+//        $('p').css('font-size', '17px').css('margin-left', 'auto').css('margin-right', 'auto');
+        $('#logo').css('width', '30px').css('height', '30px').css('position', 'absolute').css('right', '0px').css('bottom', '0px').css('margin', '10px');
+        $('div.class.slick-slide').css('width', '400px');
+        $('p.title').css('width', '100px').css('font-size', '17px').css('margin-left', 'auto').css('margin-right', 'auto');
     }
   });
 }
@@ -87,15 +96,21 @@ function parseRSS(url, container) {
 </script>
     
 <style>
-/*
-    img { border: 0; max-width: 100%;  ;
-     width: auto; height: 500px; padding-top: 20px }
+    .wrapper{
+          margin:auto; 
+          margin-top: 100px;
+          margin-left: auto+90px;
+          text-allign: center;
+/*          height: 400px;*/
+    }
     
-    .title {display: block; margin-left:auto; margin-right:auto; text-align: left}
+    .empty{
+        width: 100%;
+        height:240px;
+    }
     
-    .my-slideshow{position: relative; float:left; }
-*/
-     
+    
+    
 
 
 </style>
