@@ -1,35 +1,105 @@
 <!doctype html>
 <html lang="en-US">
 <head>
+    
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html">
   <title>Curious Sound Object</title>
-  <meta name="author" content="Jake Rocheleau">
-  <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
-  <link rel="icon" href="http://designshack.net/favicon.ico">
   <link rel="stylesheet" type="text/css" media="all" href="css/styles.css">
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" language="javascript" src="js/parser.js"></script>
-</head>
 
-<body>
-  
-  <div id="w">
-    <div id="content">
-      <h1>RSS Feed Demo Only Text</h1>
-      
-      <div id="tumblr" class="feedcontainer"></div>
-      <hr>
-      <div id="pinterest" class="feedcontainer"></div>
-    </div><!-- @end #content -->
-  </div><!-- @end #w -->
     
+<!--  Slick Carousel -->
+  <script type="text/javascript" language="javascript" src="js/slick.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="slick/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+<!--  /Slick Carousel -->
+    
+</head>
+    
+<body>
+    <div class="wrapper"> 
+    <div class="my-slideshow">
+    </div>
+        </div>
+    
+    <div class="data-div" style="display: none;">
+        <div class="data-list"></div> 
+    </div>
+
+
 <script type="text/javascript">
+
 $(function(){
-  // running custom RSS functions
-  parseRSS('http://curioussoundobjects.tumblr.com/rss', '#tumblr');
-  parseRSS('https://www.pinterest.com/nickolaspeter/build.rss/', '#pinterest');
+   parseRSS('http://www.pinterest.com/izelmaras/visual/rss', '#pinterest'); 
+     
 });
+
+
+    
+function parseRSS(url, container) {
+    
+  $.ajax({
+    //Ajax call to encode url
+    url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=250&callback=?&q=' + encodeURIComponent(url),
+    dataType: 'json',
+    //Data includes the data we get in the json format
+    success: function(data) {
+                      console.log(data.responseData.feed);
+
+      $.each(data.responseData.feed.entries, function(key, value){
+        var thehtml = value.content; 
+        $("<div/>").appendTo(".data-div .data-list").html(thehtml).addClass("imageDiv");
+        $("<p/>").appendTo(".data-div .data-list").html(value.title).addClass("title");
+        var onlyImg = $("div.data-list").find("img");
+        var onlyTitle = $("div.data-list").find("p");
+        $("<div/>").appendTo(".my-slideshow").html(onlyImg).addClass("class").css("display", "block");
+        $(".class:last").append(onlyTitle).css("font-size","160%").css("font-family","Futura").css("margin-top","60px"); 
+        $("<link/>").appendTo(".class:last").html(value.link); 
+        console.log("Hi");
+      });
+
+//           Slick Carousel        
+        $('.my-slideshow').slick({
+            lazyLoad: 'ondemand',
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 500,
+            cssEase: 'linear',
+            fade: true,
+            centerMode: false,
+            //adaptiveHeight: true,
+        });
+//           Slick Carousel End
+        
+    }
+  });
+}
+
+
+
 </script>
+    
+<style>
+/*
+    img { border: 0; max-width: 100%;  ;
+     width: auto; height: 500px; padding-top: 20px }
+    
+    .title {display: block; margin-left:auto; margin-right:auto; text-align: left}
+    
+    .my-slideshow{position: relative; float:left; }
+*/
+     
+
+
+</style>
+    
+    
 </body>
 </html>
